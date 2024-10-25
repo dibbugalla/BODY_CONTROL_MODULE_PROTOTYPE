@@ -1,0 +1,58 @@
+/*@!Encoding:1252*/
+includes{}
+
+variables{}
+
+on message 0xD1{
+  if(this.byte(0)==0xF1){
+  @DOOR_CONTROL::f_right_door_var=1;
+  }
+  else
+   @DOOR_CONTROL::f_right_door_var=0;
+}
+
+on message 0xD2{
+  if(this.byte(0)==0xF2){
+  @DOOR_CONTROL::f_left_door_var=1;
+  }
+  else
+   @DOOR_CONTROL::f_left_door_var=0;
+}
+
+
+on message 0xD3{
+  if(this.byte(0)==0xF3){
+ @DOOR_CONTROL::r_right_door_var=1;
+  }
+  else
+   @DOOR_CONTROL::r_right_door_var=0;
+}
+
+on message 0xD4{
+  if(this.byte(0)==0xF4){
+ @DOOR_CONTROL::r_left_door_var=1;
+  }
+  else
+   @DOOR_CONTROL::r_left_door_var=0;
+}
+
+on message 0xC1{
+  if(this.byte(0)==0xC0){
+ @DOOR_CONTROL::centrol_lock_door_var=1;
+    if(@DOOR_CONTROL::centrol_lock_door_var==1){
+     @DOOR_CONTROL::f_right_door_var=1;
+      @DOOR_CONTROL::f_left_door_var=1;
+      @DOOR_CONTROL::r_left_door_var=1;
+      @DOOR_CONTROL::r_right_door_var=1;
+    }
+  }
+  else{
+ @DOOR_CONTROL::centrol_lock_door_var=0;
+  if(@DOOR_CONTROL::centrol_lock_door_var==0){
+     @DOOR_CONTROL::f_right_door_var=0;
+      @DOOR_CONTROL::f_left_door_var=0;
+      @DOOR_CONTROL::r_left_door_var=0;
+      @DOOR_CONTROL::r_right_door_var=0;
+    }
+    }
+}

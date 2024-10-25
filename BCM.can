@@ -1,0 +1,157 @@
+/*@!Encoding:1252*/
+includes{}
+/@!Encoding:1252/
+/*node body_cntrl  */
+
+
+variables
+{
+  message 0xA1 m1;
+  message 0xB1 m2;
+  message 0xB2 m3;
+  message 0xD1 FR;
+  message 0xD2 FL;
+  message 0xD3 RR;
+  message 0xD4 RL;
+  message 0xC1 C;
+}
+
+on sysvar HEADLIGHT::hl_sw_syswar{
+  if(@HEADLIGHT::hl_sw_syswar==1){
+    //switch is pressed
+    m1.byte(0)=0x11;
+    m1.rtr=0;
+    m1.dlc=1;
+    output(m1);
+}
+else{
+ //sw is not pressesd
+  m1.byte(0)=0x00;
+  m1.rtr=0;
+  m1.dlc=1;
+  output(m1);
+}
+}
+
+ on sysvar INDICATROS::left_sw_var{
+  if(@INDICATROS::left_sw_var==1){
+  m2.byte(0)=0x22;
+  m2.rtr=0;
+  m2.dlc=1;
+  output(m2);
+}
+
+  //switch is not pressed
+ 
+  else{
+  m2.byte(0)=0x77;
+  m2.rtr=0;
+  m2.dlc=1;
+  output(m2);
+
+  }
+}
+
+on sysvar INDICATROS::right_sw_var{
+  if(@INDICATROS::right_sw_var==1){
+  m3.byte(0)=0x33;
+  m3.rtr=0;
+  m3.dlc=1;
+  output(m3);
+}
+
+  //switch is not pressed
+ 
+  else{
+  m3.byte(0)=0x88;
+  m3.rtr=0;
+  m3.dlc=1;
+  output(m3);
+
+  }
+}
+///////////door control ///////////////
+
+on sysvar DOOR_CONTROL::f_right_door_var{
+ if(@DOOR_CONTROL::f_right_door_var==1){
+  FR.byte(0)=0xF1;
+  FR.rtr=0;
+  FR.dlc=1;
+  output(FR);
+}
+else{
+  
+  FR.byte(0)=0x00;
+  FR.rtr=0;
+  FR.dlc=1;
+  output(FR);
+}
+}
+
+on sysvar DOOR_CONTROL::f_left_door_var{
+  if(@DOOR_CONTROL::f_left_door_var==1){
+  FL.byte(0)=0xF2;
+  FL.rtr=0;
+  FL.dlc=1;
+  output(FL);
+}
+else{
+  
+  FL.byte(0)=0x00;
+  FL.rtr=0;
+  FL.dlc=1;
+  output(FL);
+}
+}
+
+on sysvar DOOR_CONTROL::r_right_door_var{
+  if(@DOOR_CONTROL::r_right_door_var==1){
+  RR.byte(0)=0xF3;
+  RR.rtr=0;
+  RR.dlc=1;
+  output(RR);
+}
+else{
+  
+  RR.byte(0)=0x00;
+  RR.rtr=0;
+  RR.dlc=1;
+  output(RR);
+}
+}
+
+
+on sysvar DOOR_CONTROL::r_left_door_var{
+  if(@DOOR_CONTROL::r_left_door_var==1){
+  RL.byte(0)=0xF4;
+  RL.rtr=0;
+  RL.dlc=1;
+  output(RL);
+}
+else{
+  
+  RL.byte(0)=0x00;
+  RL.rtr=0;
+  RL.dlc=1;
+  output(RL);
+}
+}
+
+
+on sysvar DOOR_CONTROL::centrol_lock_door_var{
+  if(@DOOR_CONTROL::centrol_lock_door_var==1){
+  C.byte(0)=0xC0;
+  C.rtr=0;
+  C.dlc=1;
+  output(C);
+}
+else{
+  
+  C.byte(0)=0x11;
+  C.rtr=0;
+  C.dlc=1;
+  output(C);
+}
+  
+}
+

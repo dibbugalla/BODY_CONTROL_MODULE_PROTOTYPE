@@ -1,0 +1,79 @@
+/*@!Encoding:1252*/
+includes{}
+
+variables{
+    msTimer t1,t2;
+    int flag=1;
+}
+
+
+on timer t1{
+   if(flag==1){
+   @LIGHTS::left=1;
+    flag=0;
+   }
+   else if(flag==0){
+    @LIGHTS::left=0;
+    flag=1;
+  }
+  setTimer(t1,250);
+}
+on timer t2{
+  if(flag==1){
+    @LIGHTS::right=1;
+    flag=0;
+  }
+  else if(flag==0){
+   @LIGHTS::right=0;
+    flag=1;
+  }
+  setTimer(t2,250);
+}
+
+/*front light control*/
+on message 0xA1{
+  if(this.byte(0)==0x11){
+  @HEADLIGHT::hl_sw_syswar=1;  
+  }
+  else
+    @HEADLIGHT::hl_sw_syswar=0;
+}
+
+/////////INDICATOR CONTROL///////////
+
+/* left indicator */
+
+on message 0xB1{
+ if(this.byte(0)==0x22){
+  @INDICATROS::left_sw_var=1;
+  @INDICATROS::right_sw_var=0;
+  setTimer(t1,250);
+  
+  }
+else if(this.byte(0)==0x77){
+@INDICATROS::left_sw_var=0;
+cancelTimer(t1);
+  @LIGHTS::left=0;
+}
+else if((this.byte(0)==0x33)){
+ @INDICATROS::left_sw_var=0;
+  @INDICATROS::right_sw_var=1;
+}
+}
+/* right indicator */
+on message 0xB2{
+ if(this.byte(0)==0x33){
+  @INDICATROS::right_sw_var=1;
+  @INDICATROS::left_sw_var=0;
+  setTimer(t2,250);
+  
+  }
+else if((this.byte(0)==0x88)){
+@INDICATROS::right_sw_var=0;
+cancelTimer(t2);
+  @LIGHTS::right=0;
+}
+else if((this.byte(0)==0x22)){
+ @INDICATROS::right_sw_var=0; 
+}
+}
